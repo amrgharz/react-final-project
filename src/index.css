@@ -1,0 +1,43 @@
+
+.nav{
+  color : goldenrod;
+  background-color: black;
+  width: 100%;
+  height : 75px;
+  padding-top: 15px;
+  text-align: left;
+}
+.log_in{
+  float:right;
+  background-color: transparent;
+  color:goldenrod;
+  border:hidden;
+}
+.register{
+float:right;
+background-color: transparent;
+color:goldenrod;
+border:hidden;
+}
+.about{
+  float : right;
+  color: goldenrod;
+}
+.background{
+  width:100%;
+  height:600px;
+  background-image: url('background.jpg');
+  background-size: 100%  600px;
+  opacity: 0.8;
+}
+.register_button{
+  margin-right: 5px;
+  margin-top:400px;
+  background-color: gold; 
+}
+.log_in_button{
+  margin-left:5px;
+  margin-top:400px;
+  background-color: gold;
+ 
+}

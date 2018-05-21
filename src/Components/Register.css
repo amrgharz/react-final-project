@@ -1,0 +1,57 @@
+form{
+    text-align: -webkit-center;
+    margin-top: 100px;
+}
+.username{
+    display: block;
+    margin-bottom:25px;
+    background-color:gold;
+    border-radius: 6px;
+    width:60%;
+    height:40px;
+    padding:4px;
+}
+
+.email{
+    display: block;
+    margin-bottom:25px;
+    background-color:gold;
+    border-radius: 6px;
+    width:60%;
+    height:40px;
+    padding:4px;
+
+}
+
+.password{
+    display: block;
+    margin-bottom:25px;
+    background-color:gold;
+    border-radius: 6px;
+    width:60%;
+    height:40px;
+    padding:4px;
+
+}
+
+.confirm_passowrd{
+    display: block;
+    margin-bottom:25px;
+    background-color:gold;
+    border-radius: 6px;
+    width:60%;
+    height:40px;
+    padding:4px;
+
+}
+
+.submit{
+    display:block;
+    margin-bottom:25px;
+    border-radius: 6px;
+    width:60%;
+    height:40px;
+    padding:4px;
+
+
+}

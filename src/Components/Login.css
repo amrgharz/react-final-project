@@ -1,0 +1,30 @@
+div{
+    text-align: center;
+}
+#email{
+    background-color: gold;
+    display:block;
+    margin-bottom:25px;
+    border-radius: 6px;
+    width:60%;
+    height:40px;
+    padding:4px;
+}
+
+#password{
+    background-color: gold;
+    display:block;
+    margin-bottom:25px;
+    border-radius: 6px;
+    width:60%;
+    height:40px;
+    padding:4px;
+}
+
+#log_in{
+    background-color: gold;
+    border-radius: 6px;
+    width:400px;
+    height:40px;
+    padding:4px;
+}

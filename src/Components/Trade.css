@@ -1,0 +1,67 @@
+#container{
+    display: grid;
+    grid-template-columns: repeat(6 , 1fr);
+    grid-auto-rows: minmax(75px,auto);
+    margin: auto;
+    grid-gap:3px;
+    grid-template-areas:
+    "nav nav nav nav nav nav"
+    "chart chart chart chart chart chart "
+    "chart chart chart chart chart chart "
+    "chart chart chart chart chart chart "
+    "chart chart chart chart chart chart "
+    "buy_orders buy_orders buy_orders buy_orders buy_orders buy_orders"
+    "buy_orders buy_orders buy_orders buy_orders buy_orders buy_orders"
+    "sell_orders sell_orders sell_orders sell_orders sell_orders sell_orders"
+    "sell_orders sell_orders sell_orders sell_orders sell_orders sell_orders"
+    "place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order "
+    "place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order"
+    "place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order"
+}
+/* media query for desktops*/
+@media screen and (min-width:760px){
+#container{
+    display: grid;
+    grid-template-columns: repeat(6 , 1fr);
+    grid-auto-rows: minmax(75px,auto);
+    margin: auto;
+    grid-gap:3px;
+    grid-template-areas:
+    "nav nav nav nav nav nav"
+    "chart chart chart chart buy_orders buy_orders"
+    "chart chart chart chart buy_orders buy_orders"
+    "chart chart chart chart buy_orders buy_orders"
+    "chart chart chart chart sell_orders sell_orders"
+    "chart chart chart chart sell_orders sell_orders"
+    "chart chart chart chart sell_orders sell_orders"
+    "place_buy_order place_buy_order place_buy_order  place_sell_order  place_sell_order  place_sell_order"
+    "place_buy_order place_buy_order place_buy_order  place_sell_order  place_sell_order  place_sell_order"
+    "place_buy_order place_buy_order place_buy_order  place_sell_order  place_sell_order  place_sell_order"
+    
+}
+}
+.nav{
+    grid-area: nav;
+}
+.chart{
+    grid-area:chart;
+}
+.buy_orders{
+    grid-area: buy_orders
+}
+.sell_orders{
+    grid-area: sell_orders
+}
+.Place_buy_order{
+    grid-area : place_buy_order
+}
+.Place_sell_order{
+    grid-area: place_sell_order
+}
+.log_out{
+    float:right;
+}
+#container > *{
+    background:#3bbced;
+    padding:25px;
+}
