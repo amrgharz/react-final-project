@@ -14,9 +14,9 @@
     "buy_orders buy_orders buy_orders buy_orders buy_orders buy_orders"
     "sell_orders sell_orders sell_orders sell_orders sell_orders sell_orders"
     "sell_orders sell_orders sell_orders sell_orders sell_orders sell_orders"
-    "place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order "
-    "place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order"
-    "place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order place_buy_order"
+    "place_buy_order place_buy_order place_buy_order place_sell_order place_sell_order place_sell_order "
+    "place_buy_order place_buy_order place_buy_order place_sell_order place_sell_order place_sell_order"
+    "place_buy_order place_buy_order place_buy_order place_sell_order place_sell_order place_sell_order"
 }
 /* media query for desktops*/
 @media screen and (min-width:760px){
@@ -62,6 +62,6 @@
     float:right;
 }
 #container > *{
-    background:#3bbced;
+    background:lightpink;
     padding:25px;
 }
