@@ -58,8 +58,8 @@ export default class Trading extends React.Component{
                     <table className='table'>
                         <thead>
                             <tr>
-                                <th style={{textAlign:'center'}}>Price</th>
                                 <th style={{textAlign:'center'}}>Amount</th>
+                                <th style={{textAlign:'center'}}>Price</th>
                                 <th style={{textAlign:'center'}}>Sum</th>
                             </tr>
                         </thead>
@@ -82,9 +82,9 @@ export default class Trading extends React.Component{
                    <table className='table'>
                           <thead>
                             <tr>
-                                <th style={{textAlign:'center'}}>price</th>
-                                <th style={{textAlign:'center'}}>amoun</th>
-                                <th style={{textAlign:'center'}}>sum</th>
+                                <th style={{textAlign:'center'}}>Amount</th>
+                                <th style={{textAlign:'center'}}>Price</th>
+                                <th style={{textAlign:'center'}}>Sum</th>
                             </tr>
                           </thead>
                           <tbody>
