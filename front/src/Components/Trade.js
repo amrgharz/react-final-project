@@ -22,13 +22,13 @@ export default class Trading extends React.Component{
                 },
                 {
                     price: 6,
-                    amount: 10,
-                    sum: 70
+                    amount:7,
+                    sum: 42
                 },
                 {
                     price: 7,
-                    amount: 10,
-                    sum: 70
+                    amount: 8,
+                    sum: 56
                 }
             ],
             sell_price: 0,
