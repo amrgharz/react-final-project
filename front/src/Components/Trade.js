@@ -54,7 +54,11 @@ export default class Trading extends React.Component{
      this.handleChange_buy = this.handleChange_buy.bind(this)
      this.handleSubmit_buy = this.handleSubmit_buy.bind(this)
      this.handleChange_sell = this.handleChange_sell.bind(this) 
-     this.handleSubmit_sell = this.handleSubmit_sell.bind(this)  
+     this.handleSubmit_sell = this.handleSubmit_sell.bind(this)
+     this.getTotal = this.getTotal.bind(this)  
+    }
+    getTotal = (amount , price) =>{
+        return amount * price;
     }
     handleChange_buy(event){
         this.setState({ [event.target.name]: event.target.value });
@@ -62,9 +66,9 @@ export default class Trading extends React.Component{
     
     handleSubmit_buy(event){
         const order = {
-            amount: parseInt(this.state.amount),
-            price: parseInt(this.state.price),
-            sum: parseInt(this.state.sum)
+            amount: parseInt(this.state.amount , 10),
+            price: parseInt(this.state.price , 10),
+            sum: parseInt(event.target.sum.value , 10)
         }
         this.state.orders.push(order)
         this.setState({orders: this.state.orders})
@@ -77,9 +81,9 @@ export default class Trading extends React.Component{
     handleSubmit_sell(event){
         debugger;
         const order_sell ={
-            sell_amount: parseInt(this.state.sell_amount),
-            sell_price : parseInt(this.state.sell_price),
-            sell_sum : parseInt(this.state.sell_sum)
+            sell_amount: parseInt(this.state.sell_amount , 10),
+            sell_price : parseInt(this.state.sell_price, 10 ),
+            sell_sum : parseInt(this.state.sell_sum, 10 )
         }
         let old_sell_order = this.state.sell_orders;
         old_sell_order.push(order_sell)
@@ -156,7 +160,7 @@ export default class Trading extends React.Component{
                         </div>
                         <div>
                             <span className='lable'>Total Price:</span>
-                            <input type='text' name='sum' value = {this.state.sum} onChange={this.handleChange_buy} />
+                            <input type='text' name='sum' value = {this.getTotal(this.state.amount, this.state.price)} disabled onChange = {this.handleChange_buy} />
                         </div>
                         <input type='submit' value='Buy' className='buy'/>
                     </form>
