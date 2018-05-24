@@ -9,10 +9,12 @@ export default class Trading extends React.Component{
     constructor(){
         super();
         this.state = {
-            min:0,
-            max:Infinity,
+            user:{
+                x_amount:100,
+                y_amount:100
+            },
             price: 0,
-            amount: 0,
+            amount: 10,
             sum: 0,
             orders : [
                 {
@@ -81,8 +83,13 @@ export default class Trading extends React.Component{
         const order = {
             amount: parseInt(this.state.amount , 10),
             price: parseInt(this.state.price , 10),
-            sum: parseInt(event.target.sum.value , 10)
+            sum: parseInt(event.target.sum.value, 10)
         }
+        const final_amount = this.state.user.y_amount - order.sum
+
+        var stateCopy = Object.assign({}, this.state);
+        stateCopy.user.y_amount = final_amount;
+        this.setState(stateCopy);
         this.state.orders.push(order)
         this.setState({orders: this.state.orders})
         event.preventDefault();
@@ -94,10 +101,17 @@ export default class Trading extends React.Component{
             sell_price : parseInt(this.state.sell_price, 10 ),
             sell_sum : parseInt(event.target.sell_sum.value, 10 )
         }
+        const final_amount = this.state.user.x_amount - sell_order.sell_amount
+
+        var stateCopy = Object.assign({},this.state);
+        stateCopy.user.x_amount = final_amount;
+        this.setState(stateCopy)
         this.state.sell_orders.push(sell_order)
         this.setState({sell_orders: this.state.sell_orders})
         event.preventDefault();
     }
+
+    
     
     render(){
         return(
@@ -157,13 +171,14 @@ export default class Trading extends React.Component{
                 </div>
                 <div className='Place_buy_order'>
                     <form name='buyform' onSubmit = {this.handleSubmit_buy}>
+                    <span><strong>Buy X  ||  </strong>{`You have : ${this.state.user.y_amount}  of Y`}</span>
                         <div className='filed-bigright'>
                             <span className='lable'>Amount of X:</span>
                             <label className='ng-binding'></label>
                             <input type='number' name='amount' value = {this.state.amount} onChange={this.handleAmountChange} />
                         </div>
                         <div>
-                            <span className='lable'>Price of X:</span>
+                            <span className='lable'>Price:</span>
                             <label className='ng-binding'></label>
                             <input type='text' name='price' value = {this.state.price} onChange={this.handlePriceChange} />
                         </div>
@@ -178,13 +193,14 @@ export default class Trading extends React.Component{
                 </div>
                 <div className='Place_sell_order'>
                     <form name='sellform' onSubmit={this.handleSubmit_sell}>
+                    <span> <strong>Sell X   ||  </strong>{`You have : ${this.state.user.x_amount}  of X`}</span>
                         <div className='filed-bigright'>
                             <span className='lable'>Amount of X:</span>
                             <label className='ng-binding'></label>
                             <input type='number' name='sell_amount' value = {this.state.sell_amount} onChange={this.handleAmountChange}/>
                         </div>
                         <div>
-                            <span className='lable'>Price of X:</span>
+                            <span className='lable'>Price:</span>
                             <label className='ng-binding'></label>
                             <input type='text' name='sell_price' value = {this.state.sell_price} onChange={this.handlePriceChange}/ >
                         </div>
