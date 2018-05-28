@@ -2,8 +2,9 @@ import React from 'react';
 
 import './Trade.css'
 
-//import {Row , Grid , Col , Button } from 'react-bootstrap'
+import io from 'socket.io-client'
 
+//import {Row , Grid , Col , Button } from 'react-bootstrap'
 
 export default class Trading extends React.Component{
     constructor(){
@@ -13,46 +14,15 @@ export default class Trading extends React.Component{
                 x_amount:100,
                 y_amount:100
             },
+            socket:null,
             price: 0,
             amount: 10,
             sum: 0,
-            orders : [
-                {
-                    price: 5,
-                    amount: 10,
-                    sum: 70
-                },
-                {
-                    price: 6,
-                    amount:7,
-                    sum: 42
-                },
-                {
-                    price: 7,
-                    amount: 8,
-                    sum: 56
-                }
-            ],
+            buy_orders : [],
             sell_price: 0,
             sell_amount: 0,
             sell_sum: 0,
-            sell_orders : [
-                {
-                    sell_price: 5,
-                    sell_amount: 10,
-                    sell_sum: 70
-                },
-                {
-                    sell_price: 6,
-                    sell_amount: 10,
-                    sell_sum: 70
-                },
-                {
-                    sell_price: 7,
-                    sell_amount: 10,
-                    sell_sum: 70
-                }
-            ]
+            sell_orders : []
 
         }
      this.handlePriceChange= this.handlePriceChange.bind(this)
@@ -90,8 +60,8 @@ export default class Trading extends React.Component{
         var stateCopy = Object.assign({}, this.state);
         stateCopy.user.y_amount = final_amount;
         this.setState(stateCopy);
-        this.state.orders.push(order)
-        this.setState({orders: this.state.orders})
+        this.state.buy_orders.push(order)
+        this.setState({buy_orders: this.state.buy_orders})
         event.preventDefault();
     }
 
@@ -109,6 +79,13 @@ export default class Trading extends React.Component{
         this.state.sell_orders.push(sell_order)
         this.setState({sell_orders: this.state.sell_orders})
         event.preventDefault();
+    }
+
+    componentDidMount(){
+        const socket = io('http://localhost:5555')
+
+        this.setState ({socket:socket})
+
     }
 
     
@@ -130,7 +107,7 @@ export default class Trading extends React.Component{
                             </tr>
                         </thead>
                         <tbody>
-                        {this.state.orders
+                        {this.state.buy_orders
                             .sort((a, b) => a.price > b.price)
                             .map((item, i) => {
                             return [
