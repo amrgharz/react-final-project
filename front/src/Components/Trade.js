@@ -18,11 +18,11 @@ export default class Trading extends React.Component{
             price: 0,
             amount: 10,
             sum: 0,
-            buy_orders : [],
+            buy_orders_list : [],
             sell_price: 0,
             sell_amount: 0,
             sell_sum: 0,
-            sell_orders : []
+            sell_orders_list : []
 
         }
      this.handlePriceChange= this.handlePriceChange.bind(this)
@@ -34,6 +34,7 @@ export default class Trading extends React.Component{
 
      this.getTotal_buy = this.getTotal_buy.bind(this)  
     }
+    
     getTotal_buy = (amount , price) =>{
         return amount * price;
     }
@@ -59,11 +60,13 @@ export default class Trading extends React.Component{
 
         var stateCopy = Object.assign({}, this.state);
         stateCopy.user.y_amount = final_amount;
-        this.setState(stateCopy);
-        this.state.buy_orders.push(order)
-        this.setState({buy_orders: this.state.buy_orders})
+        this.setState(stateCopy)
+        this.state.socket.emit('add:order' , order)
+        //this.state.buy_orders_list.push(order)
+        //this.setState({buy_orders_list: this.state.buy_orders_list})
         event.preventDefault();
-    }
+    };
+    
 
     handleSubmit_sell(event){
         const sell_order ={
@@ -76,17 +79,29 @@ export default class Trading extends React.Component{
         var stateCopy = Object.assign({},this.state);
         stateCopy.user.x_amount = final_amount;
         this.setState(stateCopy)
-        this.state.sell_orders.push(sell_order)
-        this.setState({sell_orders: this.state.sell_orders})
+        this.state.socket.emit('add:sell_order' , sell_order)
         event.preventDefault();
     }
+
+    
 
     componentDidMount(){
         const socket = io('http://localhost:5555')
 
         this.setState ({socket:socket})
 
+        socket.on('add:order' ,buy_orders_list=>{
+            this.setState({buy_orders_list})
+        })
+
+        socket.on('add:sell_order' , sell_orders_list =>{
+            this.setState({sell_orders_list})
+        })
+
+        
     }
+
+    
 
     
     
@@ -107,7 +122,7 @@ export default class Trading extends React.Component{
                             </tr>
                         </thead>
                         <tbody>
-                        {this.state.buy_orders
+                        {this.state.buy_orders_list
                             .sort((a, b) => a.price > b.price)
                             .map((item, i) => {
                             return [
@@ -131,7 +146,7 @@ export default class Trading extends React.Component{
                             </tr>
                           </thead>
                           <tbody>
-                            {this.state.sell_orders.sort((a,b)=>a.sell_price<b.sell_price)
+                            {this.state.sell_orders_list.sort((a,b)=>a.sell_price<b.sell_price)
                             .map((item , i)=>{
                                 return [
                                     <tr key={i}>
@@ -179,7 +194,7 @@ export default class Trading extends React.Component{
                         <div>
                             <span className='lable'>Price:</span>
                             <label className='ng-binding'></label>
-                            <input type='text' name='sell_price' value = {this.state.sell_price} onChange={this.handlePriceChange}/ >
+                            <input type='text' name='sell_price' value = {this.state.sell_price} onChange={this.handlePriceChange}/>
                         </div>
                         <div>
                             <span className='lable'>Total Price:</span>
