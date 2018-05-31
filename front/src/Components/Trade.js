@@ -86,10 +86,21 @@ export default class Trading extends React.Component{
     
 
     handleSubmit_sell(event){
+        event.preventDefault();
         const sell_order ={
             sell_amount: parseInt(this.state.sell_amount , 10),
             sell_price : parseInt(this.state.sell_price, 10 ),
             sell_sum : parseInt(event.target.sell_sum.value, 10 )
+        }
+        const isInvalid = (num) => !num || num<=0 || isNaN(num)
+        
+        if(isInvalid (sell_order.sell_amount) || isInvalid(sell_order.sell_price) ||  isInvalid(sell_order.sell_sum)){
+            alert('full the fields correctly')
+            return;
+        }
+        if(sell_order.sell_amount > this.state.user.x_amount ){
+            alert('you don\'t have enough X')
+            return
         }
         const final_amount = this.state.user.x_amount - sell_order.sell_amount
 
@@ -97,7 +108,6 @@ export default class Trading extends React.Component{
         stateCopy.user.x_amount = final_amount;
         this.setState(stateCopy)
         this.state.socket.emit('add:sell_order' , sell_order)
-        event.preventDefault();
     }
 
     
