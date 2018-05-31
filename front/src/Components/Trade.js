@@ -4,24 +4,32 @@ import './Trade.css'
 
 import io from 'socket.io-client'
 
+import TradingViewWidget from 'react-tradingview-widget';
+    
+
+//import Chart from './Chart'
+
 //import {Row , Grid , Col , Button } from 'react-bootstrap'
+
 
 export default class Trading extends React.Component{
     constructor(){
         super();
         this.state = {
+            min:0,
+            max: '',
             user:{
                 x_amount:100,
-                y_amount:100
+                y_amount:150
             },
             socket:null,
-            price: 0,
-            amount: 10,
-            sum: 0,
+            price: '',
+            amount: '',
+            sum: '',
             buy_orders_list : [],
-            sell_price: 0,
-            sell_amount: 0,
-            sell_sum: 0,
+            sell_price: '',
+            sell_amount: '',
+            sell_sum: '',
             sell_orders_list : []
 
         }
@@ -42,29 +50,38 @@ export default class Trading extends React.Component{
         return sell_amount * sell_price;
     }
     handlePriceChange(event){
+        
         this.setState({ [event.target.name]: event.target.value });
     }
     
     handleAmountChange = (event) => {
+
         this.setState({ [event.target.name]: event.target.value });
     }
 
     
     handleSubmit_buy(event){
+        event.preventDefault();
         const order = {
             amount: parseInt(this.state.amount , 10),
             price: parseInt(this.state.price , 10),
             sum: parseInt(event.target.sum.value, 10)
         }
-        const final_amount = this.state.user.y_amount - order.sum
+        const isInvalid = (num) => !num || num <= 0 || isNaN(num)
+        if(isInvalid(order.amount) || isInvalid(order.price) || isInvalid(order.sum)){
 
-        var stateCopy = Object.assign({}, this.state);
-        stateCopy.user.y_amount = final_amount;
-        this.setState(stateCopy)
+            alert('one of the fields is invalid')
+            return;
+        }
+        if(order.sum > this.state.user.y_amount){
+            alert("oops you do not have enough money")
+            return
+        }
+        const y_amount = this.state.user.y_amount - order.sum
+        const user = { ...this.state.user, y_amount }
+        const newState = { user }
+        this.setState(newState)
         this.state.socket.emit('add:order' , order)
-        //this.state.buy_orders_list.push(order)
-        //this.setState({buy_orders_list: this.state.buy_orders_list})
-        event.preventDefault();
     };
     
 
@@ -111,7 +128,9 @@ export default class Trading extends React.Component{
                 <div className="nav">nav
                     <button className="log_out">Log Out</button>
                 </div>
-                <div className="chart">chart</div>
+                <div className="chart">
+                    <TradingViewWidget autosize className="chart" symbol="NASDAQ:AAPL" />
+                </div>
                 <div className="buy_orders">
                     <table className='table'>
                         <thead>
@@ -146,7 +165,7 @@ export default class Trading extends React.Component{
                             </tr>
                           </thead>
                           <tbody>
-                            {this.state.sell_orders_list.sort((a,b)=>a.sell_price<b.sell_price)
+                            {this.state.sell_orders_list.sort((a,b)=>a.sell_price>b.sell_price)
                             .map((item , i)=>{
                                 return [
                                     <tr key={i}>

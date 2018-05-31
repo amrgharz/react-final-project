@@ -65,3 +65,7 @@
     background:lightpink;
     padding:25px;
 }
+
+.chart{
+    display: inline;
+}
