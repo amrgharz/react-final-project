@@ -139,7 +139,7 @@ export default class Trading extends React.Component{
                     <button className="log_out">Log Out</button>
                 </div>
                 <div className="chart">
-                    <TradingViewWidget autosize className="chart" symbol="NASDAQ:AAPL" />
+                    <TradingViewWidget autosize symbol="BTCUSD" />
                 </div>
                 <div className="buy_orders">
                     <table className='table'>
