@@ -5,6 +5,7 @@ import './Trade.css'
 import io from 'socket.io-client'
 
 import TradingViewWidget from 'react-tradingview-widget';
+import { WSAEPROCLIM } from 'constants';
     
 
 //import Chart from './Chart'
@@ -31,7 +32,6 @@ export default class Trading extends React.Component{
             sell_amount: '',
             sell_sum: '',
             sell_orders_list : []
-
         }
      this.handlePriceChange= this.handlePriceChange.bind(this)
      this.handleAmountChange= this.handleAmountChange.bind(this)
@@ -41,6 +41,7 @@ export default class Trading extends React.Component{
      this.handleSubmit_sell = this.handleSubmit_sell.bind(this)
 
      this.getTotal_buy = this.getTotal_buy.bind(this)  
+
     }
     
     getTotal_buy = (amount , price) =>{
@@ -82,6 +83,7 @@ export default class Trading extends React.Component{
         const newState = { user }
         this.setState(newState)
         this.state.socket.emit('add:order' , order)
+        this.state.socket.emit('check:sell' , order)
     };
     
 
@@ -108,15 +110,16 @@ export default class Trading extends React.Component{
         stateCopy.user.x_amount = final_amount;
         this.setState(stateCopy)
         this.state.socket.emit('add:sell_order' , sell_order)
+        this.state.socket.emit('check:buy' , sell_order)
     }
 
     
 
     componentDidMount(){
         const socket = io('http://localhost:5555')
-
-        this.setState ({socket:socket})
-
+        this.setState({ socket: socket }, () => {
+            this.state.socket.emit('start')
+        }); 
         socket.on('add:order' ,buy_orders_list=>{
             this.setState({buy_orders_list})
         })
@@ -124,8 +127,23 @@ export default class Trading extends React.Component{
         socket.on('add:sell_order' , sell_orders_list =>{
             this.setState({sell_orders_list})
         })
+        socket.on('buy_orders:change' ,(buy_orders_list =>{
+            this.setState({buy_orders_list})
+        }))
+        socket.on('check:sell', (buy_orders_list, sell_orders_list) => {
+            this.setState({buy_orders_list, sell_orders_list})
+        })
+        socket.on('check:buy', (buy_orders_list, sell_orders_list) => {
+            this.setState({buy_orders_list, sell_orders_list})
+        })
+        socket.on('start', (buy_orders_list, sell_orders_list)=> {
+            this.setState({buy_orders_list, sell_orders_list})    
+        })
 
-        
+    }
+
+    on_add_sell_order = (sell_order) =>{
+        this.state.socket.emit('sell_order:add' , sell_order)
     }
 
     
@@ -175,7 +193,7 @@ export default class Trading extends React.Component{
                             </tr>
                           </thead>
                           <tbody>
-                            {this.state.sell_orders_list.sort((a,b)=>a.sell_price>b.sell_price)
+                            {this.state.sell_orders_list.sort((a,b)=>a.sell_price<b.sell_price)
                             .map((item , i)=>{
                                 return [
                                     <tr key={i}>
