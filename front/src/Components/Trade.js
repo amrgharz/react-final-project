@@ -5,7 +5,6 @@ import './Trade.css'
 import io from 'socket.io-client'
 
 import TradingViewWidget from 'react-tradingview-widget';
-import { WSAEPROCLIM } from 'constants';
     
 
 //import Chart from './Chart'

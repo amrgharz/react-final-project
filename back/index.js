@@ -58,20 +58,20 @@ io.on('connection' , (socket) =>{
         io.emit('check:sell', buy_orders_list, sell_orders_list)
     })
 
-    socket.on('check:buy' , order => {
+    socket.on('check:buy' , sell_order => {
         for (var i = 0; i < buy_orders_list.length; i++){
-            if (order.price == buy_orders_list[i].price){
-                if (order.amount == buy_orders_list[i].amount){
+            if (sell_order.sell_price == buy_orders_list[i].price){
+                if (sell_order.sell_amount == buy_orders_list[i].amount){
                     buy_orders_list.splice(i,1)
-                    sell_orders_list.splice(sell_orders_list.indexOf(order,1))
+                    sell_orders_list.splice(sell_orders_list.indexOf(sell_order,1))
                 }
-                else if (order.amount < buy_orders_list[i].amount){
+                else if (sell_order.sell_amount < buy_orders_list[i].amount){
                     buy_orders_list[i].amount -= order.amount 
-                    sell_orders_list.splice(sell_orders_list.indexOf(order,1))
+                    sell_orders_list.splice(sell_orders_list.indexOf(sell_order,1))
                 }
-                else if (order.amount > buy_orders_list[i].amount){
-                    var difference = order.amount - buy_orders_list[i].amount
-                    sell_orders_list.splice(sell_orders_list.indexOf(order,1))
+                else if (sell_order.sell_amount > buy_orders_list[i].amount){
+                    var difference = sell_order.sell_amount - buy_orders_list[i].amount
+                    sell_orders_list.splice(sell_orders_list.indexOf(sell_order,1))
                     buy_orders_list.splice(i,1)
                     order.amount = difference
                     sell_orders_list.push(order)
