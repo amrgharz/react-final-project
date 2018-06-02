@@ -62,8 +62,17 @@
     float:right;
 }
 #container > *{
-    background:lightpink;
-    padding:25px;
+    background-color:lightslategray;
+}
+
+#container .nav{
+    background-color: black;
+    height:75px;
+    font-size: 18px;
+}
+.log_out{
+    color:goldenrod;
+
 }
 
 .chart{

@@ -6,8 +6,7 @@ import io from 'socket.io-client'
 
 import TradingViewWidget from 'react-tradingview-widget';
     
-
-//import Chart from './Chart'
+import {Link} from 'react-router-dom' 
 
 //import {Row , Grid , Col , Button } from 'react-bootstrap'
 
@@ -152,9 +151,11 @@ export default class Trading extends React.Component{
     render(){
         return(
             <div id="container">
-                <div className="nav">nav
-                    <button className="log_out">Log Out</button>
-                </div>
+            <nav className = 'nav'>
+                            <Link to='/' className='bitchange'>BITCHANGE</Link> 
+                            <Link to='/' className='log_out'>Log Out</Link>
+                            <Link to='about' className='about'>About</Link>
+                        </nav>
                 <div className="chart">
                     <TradingViewWidget autosize symbol="BTCUSD" />
                 </div>
