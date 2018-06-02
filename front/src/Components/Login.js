@@ -2,31 +2,54 @@ import React from 'react'
 
 import './Login.css'
 
+import {withRouter} from 'react-router-dom'
+
 import {Row , Grid , Col , Button } from 'react-bootstrap'
 
-export default class Login extends React.Component{
+class Login extends React.Component{
 
-   /* handleauth = (e) =>{
-        e.preventdefault();
-        const username = e.target.username.value
-        const password = e.target.password.value
-        if (username === user & password === pass){
-            console.log('hello from ur account')
-        }
-    }*/
+    
+  constructor (){
+      super()
+      this.state = {
+          user_value:'',
+          pass_value:'',
+          username:'amrgharz',
+          password:'12345'
+    
+      }
+          
+   this.handle_log_in= this.handle_log_in.bind(this)   
+   this.handle_username_change = this.handle_username_change.bind(this)
+   this.handle_password_change = this.handle_password_change.bind(this)
+  }
+
+  handle_username_change = (event) =>{
+    this.setState({[event.target.name]:event.target.value});
+}
+
+handle_password_change= (event) =>{
+    this.setState({[event.target.name]:event.target.value});
+}
+
+  handle_log_in = ()=>{
+    if(this.state.user_value === this.state.username && this.state.pass_value === this.state.password){
+               this.props.history.push("/trade");
+        } }
+  
     render(){
         return(
         <div> 
             <Grid>
                 <Row className='show-grid'>
                     <Col>   
-                        <form action='bla' method='POST'>
+                        <form>
            
-                            <input id='email' placeholder='Email address' name='username' />
+                            <input className='username' placeholder='username' value = {this.state.user_value} name='user_value'  onChange={this.handle_username_change}/>
 
-                            <input id='password' placeholder='Enter password' name='password'/>
+                            <input className='password' placeholder='Enter password' name='pass_value' value ={this.state.pass_value} onChange={this.handle_password_change}/>
 
-                            <Button >Log In</Button>
+                            <Button onClick={this.handle_log_in}>Log In</Button>
                         </form>
                     </Col>
                 </Row>
@@ -36,3 +59,5 @@ export default class Login extends React.Component{
     }
 
 }
+
+export default withRouter (Login)
