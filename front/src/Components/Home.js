@@ -23,7 +23,8 @@ class Home extends React.Component {
             <Grid fluid>
                 <Row className='show-grid'>
                     <Col>  
-                         <nav className = 'nav'>BITCHANGE 
+                         <nav className = 'nav'>
+                            <Link to='/' className='bitchange'>BITCHANGE</Link> 
                             <Link to='login' className='log_in'>Log in</Link>
                             <Link to='register' className='register'>Register</Link>
                             <Link to='about' className='about'>About</Link>

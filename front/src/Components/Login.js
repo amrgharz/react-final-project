@@ -2,9 +2,11 @@ import React from 'react'
 
 import './Login.css'
 
+import {Link} from 'react-router-dom'
+
 import {withRouter} from 'react-router-dom'
 
-import {Row , Grid , Col , Button } from 'react-bootstrap'
+import {Form ,FormGroup , ControlLabel, FormControl , Checkbox,  Col , Button } from 'react-bootstrap'
 
 class Login extends React.Component{
 
@@ -14,7 +16,7 @@ class Login extends React.Component{
       this.state = {
           user_value:'',
           pass_value:'',
-          username:'amrgharz',
+          username:'amr.gharz@gmail.com',
           password:'12345'
     
       }
@@ -39,21 +41,44 @@ handle_password_change= (event) =>{
   
     render(){
         return(
-        <div> 
-            <Grid>
-                <Row className='show-grid'>
-                    <Col>   
-                        <form>
-           
-                            <input className='username' placeholder='username' value = {this.state.user_value} name='user_value'  onChange={this.handle_username_change}/>
-
-                            <input className='password' placeholder='Enter password' name='pass_value' value ={this.state.pass_value} onChange={this.handle_password_change}/>
-
-                            <Button onClick={this.handle_log_in}>Log In</Button>
-                        </form>
-                    </Col>
-                </Row>
-            </Grid>
+        <div className='log_in_container'> 
+        <nav className = 'nav'>
+                            <Link to='/' className='bitchange'>BITCHANGE</Link> 
+                            <Link to='login' className='log_in'>Log in</Link>
+                            <Link to='register' className='register'>Register</Link>
+                            <Link to='about' className='about'>About</Link>
+                        </nav>
+        <Form horizontal>
+        <FormGroup controlId="formHorizontalEmail">
+          <Col componentClass={ControlLabel} sm={4}>
+            Email
+          </Col>
+          <Col sm={4}>
+            <FormControl type="email" placeholder="Email" value = {this.state.user_value} name='user_value'  onChange={this.handle_username_change}/>
+          </Col>
+        </FormGroup>
+      
+        <FormGroup controlId="formHorizontalPassword">
+          <Col componentClass={ControlLabel} sm={4}>
+            Password
+          </Col>
+          <Col sm={4}>
+            <FormControl type="password" placeholder="Password" name='pass_value' value ={this.state.pass_value} onChange={this.handle_password_change}/>
+          </Col>
+        </FormGroup>
+      
+        <FormGroup>
+          <Col smOffset={2} sm={8}>
+            <Checkbox>Remember me</Checkbox>
+          </Col>
+        </FormGroup>
+      
+        <FormGroup>
+          <Col smOffset={2} sm={8}>
+            <Button bsStyle type="submit" onClick={this.handle_log_in}>Sign in</Button>
+          </Col>
+        </FormGroup>
+      </Form>
         </div>
         )
     }

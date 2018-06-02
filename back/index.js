@@ -27,13 +27,13 @@ io.on('connection' , (socket) =>{
         io.emit('start', buy_orders_list, sell_orders_list)
     })
 
-    socket.on('sell_order:add' , sell_order =>{
-        const matched_buy_order = check_buy_orders(buy_order)
-        if(matched_buy_order){
-            buy_orders_list.splice(matched_buy_order.index , 1 )
-            io.emit('buy_orders:change' , buy_orders)
-        }
-    })
+    //socket.on('sell_order:add' , sell_order =>{
+    //    const matched_buy_order = check_buy_orders(buy_order)
+    //    if(matched_buy_order){
+    //        buy_orders_list.splice(matched_buy_order.index , 1 )
+    //        io.emit('buy_orders:change' , buy_orders)
+    //    }
+    //})
 
     socket.on('check:sell' , order => {
         for (var i = 0; i < sell_orders_list.length; i++){

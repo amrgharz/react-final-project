@@ -3,9 +3,22 @@
   color : goldenrod;
   background-color: black;
   width: 100%;
-  height : 75px;
+  height : 65px;
   padding-top: 15px;
   text-align: left;
+}
+.nav .log_in{
+  margin-right:10px;
+}
+.nav .register{
+  margin-right:25px;
+}
+.nav .about{
+  margin-right:25px;
+}
+.nav .bitchange{
+  color: goldenrod;
+  margin-left:10px;
 }
 .log_in{
   float:right;
@@ -31,12 +44,16 @@ border:hidden;
   opacity: 0.8;
 }
 .register_button{
+  width:125px;
   margin-right: 5px;
   margin-top:400px;
   background-color: gold; 
+  margin-left: -30px;
+  
 }
 .log_in_button{
-  margin-left:5px;
+  width:125px;
+  margin-left:10px;
   margin-top:400px;
   background-color: gold;
  
