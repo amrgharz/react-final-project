@@ -78,3 +78,64 @@
 .chart{
     display: inline;
 }
+/* buy form styling*/
+.Place_buy_order input{
+    width:60%
+}
+
+.Place_buy_order form {
+    font-family: inherit;
+    font-size: 100%;
+    color:black;
+    margin-top:25px;
+}
+.Place_buy_order .flex-outer{
+  list-style-type: none;
+  padding: 0;
+}
+.flex-outer > li:not(:last-child) {
+    margin-bottom: 20px;
+  }
+.buy_price{
+      margin-right:42px;
+  }
+
+.Place_buy_order .buy_button{
+    margin-left:74px;
+    background-color: limegreen;
+    border-color: aquamarine;
+    border-radius: 8px;
+}
+/* sell form styling */
+
+.Place_sell_order input{
+    width:60%
+}
+.Place_sell_order form {
+    font-family: inherit;
+    font-size: 100%;
+    color:black;
+    margin-top:25px;
+
+}
+.Place_sell_order .flex-outer{
+  list-style-type: none;
+  padding: 0;
+}
+.sell_price{
+    padding-right: 42px;
+
+}
+
+.sell-button{
+    margin-left:70px;
+    background-color: lightcoral;
+    border-color: aquamarine;
+    border-radius: 8px;
+}
+
+.Place_sell_order lable{
+    font-weight: 800;
+}
+
+  

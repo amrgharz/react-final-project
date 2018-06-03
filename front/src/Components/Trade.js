@@ -79,7 +79,11 @@ export default class Trading extends React.Component{
         const y_amount = this.state.user.y_amount - order.sum
         const user = { ...this.state.user, y_amount }
         const newState = { user }
+        const final_x_amount = this.state.user.x_amount + order.amount
+        var stateCopy_x = Object.assign({},this.state);
+        stateCopy_x.user.x_amount = final_x_amount;
         this.setState(newState)
+        this.setState(stateCopy_x)
         this.state.socket.emit('add:order' , order)
         this.state.socket.emit('check:sell' , order)
     };
@@ -103,9 +107,11 @@ export default class Trading extends React.Component{
             return
         }
         const final_amount = this.state.user.x_amount - sell_order.sell_amount
-
+        const final_y_amount = this.state.user.y_amount + sell_order.sell_sum
         var stateCopy = Object.assign({},this.state);
         stateCopy.user.x_amount = final_amount;
+        var stateCopy_y = Object.assign({},this.state);
+        stateCopy_y.user.y_amount = final_y_amount;
         this.setState(stateCopy)
         this.state.socket.emit('add:sell_order' , sell_order)
         this.state.socket.emit('check:buy' , sell_order)
@@ -193,7 +199,7 @@ export default class Trading extends React.Component{
                             </tr>
                           </thead>
                           <tbody>
-                            {this.state.sell_orders_list.sort((a,b)=>a.sell_price<b.sell_price)
+                            {this.state.sell_orders_list.sort((a,b)=>a.sell_price>b.sell_price)
                             .map((item , i)=>{
                                 return [
                                     <tr key={i}>
@@ -211,21 +217,24 @@ export default class Trading extends React.Component{
                 <div className='Place_buy_order'>
                     <form name='buyform' onSubmit = {this.handleSubmit_buy}>
                     <span><strong>Buy X  ||  </strong>{`You have : ${this.state.user.y_amount}  of Y`}</span>
-                        <div className='filed-bigright'>
-                            <span className='lable'>Amount of X:</span>
-                            <label className='ng-binding'></label>
-                            <input type='number' name='amount' value = {this.state.amount} onChange={this.handleAmountChange} />
-                        </div>
-                        <div>
-                            <span className='lable'>Price:</span>
-                            <label className='ng-binding'></label>
-                            <input type='text' name='price' value = {this.state.price} onChange={this.handlePriceChange} />
-                        </div>
-                        <div>
-                            <span className='lable'>Total Price:</span>
-                            <input type='text' name='sum' value = {this.getTotal_buy(this.state.amount, this.state.price)} disabled  />
-                        </div>
-                        <input type='submit' value='Buy' className='buy'/>
+                        <ul className='flex-outer'>
+                            <li>
+                                <label for="amount_of_x">Amount of X:</label>
+                                <input type='number' name='amount' value = {this.state.amount} onChange={this.handleAmountChange} />
+                            </li>
+                        
+                            <li>
+                                <label for='price' className='buy_price'>Price:</label>
+                                <input type='text' name='price' value = {this.state.price} onChange={this.handlePriceChange} />
+                            </li>
+                            <li>
+                                <label for='total_price'>Total Price:</label>
+                                <input type='text' name='sum' value = {this.getTotal_buy(this.state.amount, this.state.price)} disabled  />
+                            </li>
+                            <li>
+                                <input type='submit' value='Buy' className='buy_button'/>
+                            </li>
+                        </ul>
                     </form>
                 
                 
@@ -233,21 +242,23 @@ export default class Trading extends React.Component{
                 <div className='Place_sell_order'>
                     <form name='sellform' onSubmit={this.handleSubmit_sell}>
                     <span> <strong>Sell X   ||  </strong>{`You have : ${this.state.user.x_amount}  of X`}</span>
-                        <div className='filed-bigright'>
-                            <span className='lable'>Amount of X:</span>
-                            <label className='ng-binding'></label>
+                        <ul className='flex-outer'>
+                        <li>
+                            <lable fore='Amount of X'>Amount of X:</lable>
                             <input type='number' name='sell_amount' value = {this.state.sell_amount} onChange={this.handleAmountChange}/>
-                        </div>
-                        <div>
-                            <span className='lable'>Price:</span>
-                            <label className='ng-binding'></label>
-                            <input type='text' name='sell_price' value = {this.state.sell_price} onChange={this.handlePriceChange}/>
-                        </div>
-                        <div>
-                            <span className='lable'>Total Price:</span>
+                        </li>
+                        <li>
+                            <lable className = 'sell-price' style ={{marginRight:'42px'}}>Price:</lable>
+                            <input type='text' name='sell_price'  value = {this.state.sell_price} onChange={this.handlePriceChange}/>
+                        </li>
+                        <li>
+                            <lable className='lable'>Total Price:</lable>
                             <input type='text' name='sell_sum'  value ={this.getTotal_sell(this.state.sell_amount , this.state.sell_price)} disabled/>
-                        </div>
-                        <input type='submit' value='sell' className='sell' />
+                        </li>
+                        <li>
+                            <input type='submit' value='sell' className='sell-button' />
+                        </li>
+                        </ul>
                     </form>
                 </div>
             </div> 

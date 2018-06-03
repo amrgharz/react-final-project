@@ -20,6 +20,9 @@
   color: goldenrod;
   margin-left:10px;
 }
+.nav .log_out{
+  margin-right:10px;
+}
 .log_in{
   float:right;
   background-color: transparent;
