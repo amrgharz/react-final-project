@@ -80,7 +80,8 @@
 }
 /* buy form styling*/
 .Place_buy_order input{
-    width:60%
+    width:60%;
+    border-radius: 8px;
 }
 
 .Place_buy_order form {
@@ -109,7 +110,8 @@
 /* sell form styling */
 
 .Place_sell_order input{
-    width:60%
+    width:60%;
+    border-radius: 8px;
 }
 .Place_sell_order form {
     font-family: inherit;

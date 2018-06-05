@@ -17,10 +17,8 @@ export default class Trading extends React.Component{
         this.state = {
             min:0,
             max: '',
-            user:{
-                x_amount:100,
-                y_amount:150
-            },
+            x_amount:'',
+            y_amount:'',
             socket:null,
             price: '',
             amount: '',
@@ -72,19 +70,19 @@ export default class Trading extends React.Component{
             alert('one of the fields is invalid')
             return;
         }
-        if(order.sum > this.state.user.y_amount){
+        if(order.sum > this.state.y_amount){
             alert("oops you do not have enough money")
             return
         }
-        const y_amount = this.state.user.y_amount - order.sum
-        const user = { ...this.state.user, y_amount }
-        const newState = { user }
-        const final_x_amount = this.state.user.x_amount + order.amount
-        var stateCopy_x = Object.assign({},this.state);
-        stateCopy_x.user.x_amount = final_x_amount;
-        this.setState(newState)
-        this.setState(stateCopy_x)
-        this.state.socket.emit('add:order' , order)
+        //const final_y_amount = this.state.y_amount - order.sum
+        //var stateCopy = Object.assign({},this.state);
+        //stateCopy.y_amount = final_y_amount;
+        //const final_x_amount = this.state.x_amount + order.amount
+        //var stateCopy_x = Object.assign({},this.state);
+        //stateCopy_x.x_amount = final_x_amount;
+        //this.setState(stateCopy)
+        //this.setState(stateCopy_x)
+        //this.state.socket.emit('add:order' , order)
         this.state.socket.emit('check:sell' , order)
     };
     
@@ -102,18 +100,18 @@ export default class Trading extends React.Component{
             alert('full the fields correctly')
             return;
         }
-        if(sell_order.sell_amount > this.state.user.x_amount ){
+        if(sell_order.sell_amount > this.state.x_amount ){
             alert('you don\'t have enough X')
             return
         }
-        const final_amount = this.state.user.x_amount - sell_order.sell_amount
-        const final_y_amount = this.state.user.y_amount + sell_order.sell_sum
-        var stateCopy = Object.assign({},this.state);
-        stateCopy.user.x_amount = final_amount;
-        var stateCopy_y = Object.assign({},this.state);
-        stateCopy_y.user.y_amount = final_y_amount;
-        this.setState(stateCopy)
-        this.state.socket.emit('add:sell_order' , sell_order)
+        //const final_amount = this.state.x_amount - sell_order.sell_amount
+        //const final_y_amount = this.state.user.y_amount + sell_order.sell_sum
+        //var stateCopy = Object.assign({},this.state);
+        //stateCopy.x_amount = final_amount;
+        //var stateCopy_y = Object.assign({},this.state);
+        //stateCopy_y.user.y_amount = final_y_amount;
+        //this.setState(stateCopy)
+        //this.state.socket.emit('add:sell_order' , sell_order)
         this.state.socket.emit('check:buy' , sell_order)
     }
 
@@ -134,14 +132,14 @@ export default class Trading extends React.Component{
         socket.on('buy_orders:change' ,(buy_orders_list =>{
             this.setState({buy_orders_list})
         }))
-        socket.on('check:sell', (buy_orders_list, sell_orders_list) => {
-            this.setState({buy_orders_list, sell_orders_list})
+        socket.on('check:sell', (buy_orders_list, sell_orders_list , y_amount ) => {
+            this.setState({buy_orders_list, sell_orders_list,y_amount })
         })
-        socket.on('check:buy', (buy_orders_list, sell_orders_list) => {
-            this.setState({buy_orders_list, sell_orders_list})
+        socket.on('check:buy', (buy_orders_list, sell_orders_list , x_amount) => {
+            this.setState({buy_orders_list, sell_orders_list , x_amount})
         })
-        socket.on('start', (buy_orders_list, sell_orders_list)=> {
-            this.setState({buy_orders_list, sell_orders_list})    
+        socket.on('start', (buy_orders_list, sell_orders_list , x_amount , y_amount)=> {
+            this.setState({buy_orders_list, sell_orders_list , x_amount , y_amount  })    
         })
 
     }
@@ -171,7 +169,7 @@ export default class Trading extends React.Component{
                             <tr>
                                 <th style={{textAlign:'center'}}>Amount</th>
                                 <th style={{textAlign:'center'}}>Price</th>
-                                <th style={{textAlign:'center'}}>Sum</th>
+                                <th style={{textAlign:'center'}}>Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -195,7 +193,7 @@ export default class Trading extends React.Component{
                             <tr>
                                 <th style={{textAlign:'center'}}>Amount</th>
                                 <th style={{textAlign:'center'}}>Price</th>
-                                <th style={{textAlign:'center'}}>Sum</th>
+                                <th style={{textAlign:'center'}}>Total</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -216,7 +214,7 @@ export default class Trading extends React.Component{
                 </div>
                 <div className='Place_buy_order'>
                     <form name='buyform' onSubmit = {this.handleSubmit_buy}>
-                    <span><strong>Buy X  ||  </strong>{`You have : ${this.state.user.y_amount}  of Y`}</span>
+                    <span><strong>Buy X  ||  </strong>{`You have : ${this.state.y_amount}  of Y`}</span>
                         <ul className='flex-outer'>
                             <li>
                                 <label for="amount_of_x">Amount of X:</label>
@@ -241,7 +239,7 @@ export default class Trading extends React.Component{
                 </div>
                 <div className='Place_sell_order'>
                     <form name='sellform' onSubmit={this.handleSubmit_sell}>
-                    <span> <strong>Sell X   ||  </strong>{`You have : ${this.state.user.x_amount}  of X`}</span>
+                    <span> <strong>Sell X   ||  </strong>{`You have : ${this.state.x_amount}  of X`}</span>
                         <ul className='flex-outer'>
                         <li>
                             <lable fore='Amount of X'>Amount of X:</lable>

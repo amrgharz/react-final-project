@@ -12,22 +12,30 @@ server.listen(5555 , ()=> console.log('our badass server is ready'))
 const io = require ('socket.io')(server);
 
 const buy_orders_list = [ 
+    {userId:0 , amount: 10 , price:8 , sum:80},
+    {userId:0 , amount: 10 , price:9 , sum:90},
     {userId:0 , amount: 10 , price:10 , sum:100},
     {userId:1 , amount: 10 , price:11 , sum:110}, 
 ]
 
 const sell_orders_list = [
     {userId:2 , sell_amount: 10 , sell_price:12, sell_sum:120},
-    {userId:3 , sell_amount: 10 , sell_price:13 , sell_sum:130}, 
+    {userId:2 , sell_amount: 10 , sell_price:13, sell_sum:130},
+    {userId:2 , sell_amount: 10 , sell_price:14, sell_sum:140},
+    {userId:3 , sell_amount: 10 , sell_price:15, sell_sum:150}, 
     
 ] 
+
+
+    let  x_amount = 1000;
+    let  y_amount = 1000
 
 
 io.on('connection' , (socket) =>{
     console.log('Mr. wizard is connected')
 
     socket.on('start',() =>{
-        io.emit('start', buy_orders_list, sell_orders_list)
+        io.emit('start', buy_orders_list, sell_orders_list, x_amount , y_amount )
     })
 
     //socket.on('sell_order:add' , sell_order =>{
@@ -44,10 +52,12 @@ io.on('connection' , (socket) =>{
                 if (order.amount == sell_orders_list[i].sell_amount){
                     sell_orders_list.splice(i,1)
                     buy_orders_list.splice(buy_orders_list.indexOf(order,1))
+                    y_amount = y_amount - order.sum
                 }
                 else if (order.amount < sell_orders_list[i].sell_amount){
                     sell_orders_list[i].sell_amount -= order.amount 
                     buy_orders_list.splice(buy_orders_list.indexOf(order,1))
+                    y_amount = y_amount - order.sum
                 }
                 else if (order.amount > sell_orders_list[i].sell_amount){
                     var difference = order.amount - sell_orders_list[i].sell_amount
@@ -55,10 +65,11 @@ io.on('connection' , (socket) =>{
                     sell_orders_list.splice(i,1)
                     order.amount = difference
                     buy_orders_list.push(order)
+                    y_amount = y_amount - order.sum
                 }
             }
         }
-        io.emit('check:sell', buy_orders_list, sell_orders_list)
+        io.emit('check:sell', buy_orders_list, sell_orders_list , y_amount)
     })
 
     socket.on('check:buy' , sell_order => {
@@ -67,6 +78,7 @@ io.on('connection' , (socket) =>{
                 if (sell_order.sell_amount == buy_orders_list[i].amount){
                     buy_orders_list.splice(i,1)
                     sell_orders_list.splice(sell_orders_list.indexOf(sell_order,1))
+                    x_amount = x_amount - sell_order.sell_amount
                 }
                 else if (sell_order.sell_amount < buy_orders_list[i].amount){
                     buy_orders_list[i].amount -= order.amount 
@@ -81,16 +93,16 @@ io.on('connection' , (socket) =>{
                 }
             }
         }
-        io.emit('check:sell', buy_orders_list, sell_orders_list)
+        io.emit('check:buy', buy_orders_list, sell_orders_list , x_amount)
     })
 
-    socket.on('add:order' , order =>{
-        buy_orders_list.push(order)
-        socket.emit('add:order' , buy_orders_list)
-    })
-
-    socket.on('add:sell_order', sell_order =>{
-        sell_orders_list.push(sell_order)
-        socket.emit('add:sell_order' , sell_orders_list)
-    })
+    //socket.on('add:order' , order =>{
+    //    buy_orders_list.push(order)
+    //    socket.emit('add:order' , buy_orders_list)
+    //})
+//
+    //socket.on('add:sell_order', sell_order =>{
+    //    sell_orders_list.push(sell_order)
+    //    socket.emit('add:sell_order' , sell_orders_list)
+    //})
 })
