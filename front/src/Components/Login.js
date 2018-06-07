@@ -4,6 +4,8 @@ import './Login.css'
 
 import {Link} from 'react-router-dom'
 
+import io from 'socket.io-client'
+
 import {withRouter} from 'react-router-dom'
 
 import {Form ,FormGroup , ControlLabel, FormControl , Checkbox,  Col , Button } from 'react-bootstrap'
@@ -16,15 +18,23 @@ class Login extends React.Component{
       this.state = {
           user_value:'',
           pass_value:'',
-          username:'amr.gharz@gmail.com',
-          password:'12345'
-    
+          socket:null,
+          users: []
       }
           
    this.handle_log_in= this.handle_log_in.bind(this)   
    this.handle_username_change = this.handle_username_change.bind(this)
    this.handle_password_change = this.handle_password_change.bind(this)
   }
+  componentDidMount(){
+    const socket = io('http://localhost:5555')
+    this.setState({ socket: socket }, () => {
+        this.state.socket.emit('startLogin')
+    }); 
+    socket.on('startLogin', (users)=> {
+      this.setState({users: users})    
+  })
+}
 
   handle_username_change = (event) =>{
     this.setState({[event.target.name]:event.target.value});
@@ -34,10 +44,13 @@ handle_password_change= (event) =>{
     this.setState({[event.target.name]:event.target.value});
 }
 
-  handle_log_in = ()=>{
-    if(this.state.user_value === this.state.username && this.state.pass_value === this.state.password){
-               this.props.history.push("/trade");
-        } }
+  handle_log_in = () => {
+    for (var i = 0; i < this.state.users.length; i++){
+      if (this.state.users[i].useremail == this.state.user_value)
+        if (this.state.users[i].password == this.state.pass_value)
+          this.props.history.push("/trade", {Id: this.state.users[i].userId});
+    }
+  }
   
     render(){
         return(

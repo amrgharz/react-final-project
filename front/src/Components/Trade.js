@@ -27,7 +27,8 @@ export default class Trading extends React.Component{
             sell_price: '',
             sell_amount: '',
             sell_sum: '',
-            sell_orders_list : []
+            sell_orders_list : [],
+            userId: -1
         }
      this.handlePriceChange= this.handlePriceChange.bind(this)
      this.handleAmountChange= this.handleAmountChange.bind(this)
@@ -82,8 +83,8 @@ export default class Trading extends React.Component{
         //stateCopy_x.x_amount = final_x_amount;
         //this.setState(stateCopy)
         //this.setState(stateCopy_x)
-        //this.state.socket.emit('add:order' , order)
-        this.state.socket.emit('check:sell' , order)
+        this.state.socket.emit('add:order' , order)
+        this.state.socket.emit('check:sell' , order, this.state.userId)
     };
     
 
@@ -111,8 +112,8 @@ export default class Trading extends React.Component{
         //var stateCopy_y = Object.assign({},this.state);
         //stateCopy_y.user.y_amount = final_y_amount;
         //this.setState(stateCopy)
-        //this.state.socket.emit('add:sell_order' , sell_order)
-        this.state.socket.emit('check:buy' , sell_order)
+        this.state.socket.emit('add:sell_order' , sell_order)
+        this.state.socket.emit('check:buy' , sell_order, this.state.userId)
     }
 
     
@@ -120,7 +121,9 @@ export default class Trading extends React.Component{
     componentDidMount(){
         const socket = io('http://localhost:5555')
         this.setState({ socket: socket }, () => {
-            this.state.socket.emit('start')
+            this.setState({ userId: this.props.location.state.Id }, () => {
+                this.state.socket.emit('start', this.state.userId)
+            })
         }); 
         socket.on('add:order' ,buy_orders_list=>{
             this.setState({buy_orders_list})
@@ -132,23 +135,23 @@ export default class Trading extends React.Component{
         socket.on('buy_orders:change' ,(buy_orders_list =>{
             this.setState({buy_orders_list})
         }))
-        socket.on('check:sell', (buy_orders_list, sell_orders_list , y_amount ) => {
-            this.setState({buy_orders_list, sell_orders_list,y_amount })
+        socket.on('check:sell', (buy_orders_list, sell_orders_list) => {
+            this.setState({buy_orders_list, sell_orders_list })
+        })
+        socket.on('check:y_amount', (y_amount , x_amount) => {
+            this.setState({y_amount , x_amount })
+        })
+        socket.on('check:x_amount' , (x_amount , y_amount)  =>{
+            this.setState({x_amount , y_amount})
         })
         socket.on('check:buy', (buy_orders_list, sell_orders_list , x_amount) => {
             this.setState({buy_orders_list, sell_orders_list , x_amount})
         })
         socket.on('start', (buy_orders_list, sell_orders_list , x_amount , y_amount)=> {
+            console.log(x_amount + " " + y_amount)
             this.setState({buy_orders_list, sell_orders_list , x_amount , y_amount  })    
         })
-
     }
-
-    on_add_sell_order = (sell_order) =>{
-        this.state.socket.emit('sell_order:add' , sell_order)
-    }
-
-    
 
     
     
@@ -214,7 +217,7 @@ export default class Trading extends React.Component{
                 </div>
                 <div className='Place_buy_order'>
                     <form name='buyform' onSubmit = {this.handleSubmit_buy}>
-                    <span><strong>Buy X  ||  </strong>{`You have : ${this.state.y_amount}  of Y`}</span>
+                    <span><strong>Buy X  ||  </strong>{`You have : ${this.state.y_amount}  Y`}</span>
                         <ul className='flex-outer'>
                             <li>
                                 <label for="amount_of_x">Amount of X:</label>
