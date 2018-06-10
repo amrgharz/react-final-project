@@ -1,42 +1,140 @@
-import React from 'react';
+import React from 'react'
 
 import '../index.css'
 
-import {Link} from 'react-router-dom';
+//import {Link} from 'react-router-dom'
+
+import io from 'socket.io-client'
 
 import {withRouter} from 'react-router-dom'
 
-import {Row , Grid , Col , Button } from 'react-bootstrap'
+import {Navbar ,Nav ,NavItem } from 'react-bootstrap'
 
-class Home extends React.Component {
-    //Handle the register button 
-    handleRegister = ()=>{
-        this.props.history.push("/register");
-    };
-    //Handle the login button 
-    handleLogin= () =>{
-        this.props.history.push("/login");
+class Login extends React.Component{
+
+    
+  constructor (){
+      super()
+      this.state = {
+          user_value:'',
+          pass_value:'',
+          socket:null,
+          users: []
+      }
+          
+   this.handle_log_in= this.handle_log_in.bind(this)   
+   this.handle_username_change = this.handle_username_change.bind(this)
+   this.handle_password_change = this.handle_password_change.bind(this)
+  }
+  componentDidMount(){
+    const socket = io('http://localhost:5555')
+    this.setState({ socket: socket }, () => {
+        this.state.socket.emit('startLogin')
+    }); 
+    socket.on('startLogin', (users)=> {
+      this.setState({users: users})    
+  })
+}
+
+  handle_username_change = (event) =>{
+    this.setState({[event.target.name]:event.target.value});
+}
+
+handle_password_change= (event) =>{
+    this.setState({[event.target.name]:event.target.value});
+}
+
+  handle_log_in = () => {
+    for (var i = 0; i < this.state.users.length; i++){
+      if (this.state.users[i].useremail === this.state.user_value)
+        if (this.state.users[i].password === this.state.pass_value)
+          this.props.history.push("/trade", {Id: this.state.users[i].userId});
     }
+  }
+  
     render(){
         return(
-        <div>
-            <Grid fluid>
-                <Row className='show-grid'>
-                    <Col>  
-                         <nav className = 'nav'>
-                            <Link to='/' className='bitchange'>BITCHANGE</Link> 
-                            <Link to='login' className='log_in'>Log in</Link>
-                            <Link to='register' className='register'>Register</Link>
-                            <Link to='about' className='about'>About</Link>
-                        </nav>
-                        <div className='background' >
-                            <Button className='register_button' bsStyle="Success" bsSize='large' onClick={this.handleRegister}>Register</Button>
-                            <Button className='log_in_button' bsStyle="Succeess" bsSize='large' onClick={this.handleLogin}>Log In</Button>
-                        </div>
-                    </Col>
-                </Row>
-            </Grid>
+        <div className='log_in_container'> 
+        <Navbar inverse collapseOnSelect>
+                    <Navbar.Header>
+                      <Navbar.Brand  >
+                        <a style={{color:"goldenrod"}} href="/">BITCHANGE</a>
+                      </Navbar.Brand>
+                      <Navbar.Toggle />
+                    </Navbar.Header>
+                    <Navbar.Collapse>
+                      <Nav pullRight>
+                        <NavItem  eventKey={1}  href="/login">
+                          <h4 style={{color:"goldenrod" , lineHeight:"0px"}}>Log In</h4> 
+                        </NavItem>
+                        <NavItem eventKey={2} href="/register">
+                            <h4 style={{color:"goldenrod" , lineHeight:"0px"}}>Register</h4>
+                        </NavItem>
+                        <NavItem eventKey={3} href="about">
+                            <h4 style={{color:"goldenrod" , lineHeight:"0px"}}>About</h4>
+                        </NavItem>
+                      </Nav>
+                    </Navbar.Collapse>
+                  </Navbar>
+                  <div class="login-wrap">
+                  <div class="login-html">
+                      <input id="tab-1" type="radio" name="tab" class="sign-in" checked/><label for="tab-1" class="tab" >Sign In</label>
+                      <input id="tab-2" type="radio" name="tab" class="sign-up"/><label for="tab-2" class="tab">Sign Up</label>
+              <div class="login-form">
+                  <div class="sign-in-htm">
+                      <div class="group">
+                          <label for="user" class="label">Email</label>
+                          <input id="user" name='user_value' type="text" class="input" value = {this.state.user_value } onChange={this.handle_username_change}/>
+                      </div>
+                      <div class="group">
+                          <label for="pass" class="label">Password</label>
+                          <input id="pass" name='pass_value'type="password" class="input" data-type="password" value={this.state.pass_value }onChange={this.handle_password_change}/>
+                      </div>
+                      <div class="group">
+                          <input id="check" type="checkbox" class="check" checked/>
+                          <label for="check"> <span class="icon"></span> Keep me Signed in</label>
+                      </div>
+                      <div class="group">
+                          <input type="submit" class="button" value="Sign In" onClick={this.handle_log_in}/>
+                      </div>
+                      <div class="hr"></div>
+                      <div class="foot-lnk">
+                          <a href="#forgot">Forgot Password?</a>
+                      </div>
+                  </div>
+                  <div class="sign-up-htm">
+                      <div class="group">
+                          <label for="user" class="label">Username</label>
+                          <input id="user" type="text" class="input"/>
+                      </div>
+                      <div class="group">
+                          <label for="pass" class="label">Password</label>
+                          <input id="pass" type="password" class="input" data-type="password"/>
+                      </div>
+                      <div class="group">
+                          <label for="pass" class="label">Repeat Password</label>
+                          <input id="pass" type="password" class="input" data-type="password"/>
+                      </div>
+                      <div class="group">
+                          <label for="pass" class="label">Email Address</label>
+                          <input id="pass" type="text" class="input"/>
+                      </div>
+                      <div class="group">
+                          <input type="submit" class="button" value="Sign Up"/>
+                      </div>
+                      <div class="hr"></div>
+                      <div class="foot-lnk">
+                          <label for="tab-1">Already Member?</label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      
         </div>
-        )};  
+        </div>
+        )
+    }
+
 }
-export default withRouter(Home)
+
+export default withRouter (Login)

@@ -3,7 +3,7 @@
     grid-template-columns: repeat(6 , 1fr);
     grid-auto-rows: minmax(75px,auto);
     margin: auto;
-    grid-gap:3px;
+    grid-gap:5px;
     grid-template-areas:
     "nav nav nav nav nav nav"
     "chart chart chart chart chart chart "
@@ -25,7 +25,7 @@
     grid-template-columns: repeat(6 , 1fr);
     grid-auto-rows: minmax(75px,auto);
     margin: auto;
-    grid-gap:3px;
+    grid-gap:5px;
     grid-template-areas:
     "nav nav nav nav nav nav"
     "chart chart chart chart buy_orders buy_orders"
@@ -42,6 +42,8 @@
 }
 .nav{
     grid-area: nav;
+    background: rgba(40,57,101,.9);
+    padding-top: 22px;
 }
 .chart{
     grid-area:chart;
@@ -61,83 +63,35 @@
 .log_out{
     float:right;
 }
-#container > *{
-    background-color:lightslategray;
-}
-
-#container .nav{
-    background-color: black;
-    height:75px;
-    font-size: 18px;
-}
 .log_out{
     color:goldenrod;
 
 }
-
-.chart{
-    display: inline;
+.about  {
+    float:right;
+    margin-right:15px;
+    color: goldenrod;
 }
-/* buy form styling*/
-.Place_buy_order input{
-    width:60%;
-    border-radius: 8px;
-}
-
-.Place_buy_order form {
-    font-family: inherit;
-    font-size: 100%;
-    color:black;
-    margin-top:25px;
-}
-.Place_buy_order .flex-outer{
-  list-style-type: none;
-  padding: 0;
-}
-.flex-outer > li:not(:last-child) {
-    margin-bottom: 20px;
-  }
-.buy_price{
-      margin-right:42px;
-  }
-
-.Place_buy_order .buy_button{
-    margin-left:74px;
-    background-color: limegreen;
-    border-color: aquamarine;
-    border-radius: 8px;
-}
-/* sell form styling */
-
-.Place_sell_order input{
-    width:60%;
-    border-radius: 8px;
-}
-.Place_sell_order form {
-    font-family: inherit;
-    font-size: 100%;
-    color:black;
-    margin-top:25px;
+.bitchange{
+    margin-left:15px;
+    color: goldenrod;
 
 }
-.Place_sell_order .flex-outer{
-  list-style-type: none;
-  padding: 0;
-}
-.sell_price{
-    padding-right: 42px;
-
+.log_out{
+    margin-right:10px;
 }
 
-.sell-button{
-    margin-left:70px;
-    background-color: lightcoral;
-    border-color: aquamarine;
-    border-radius: 8px;
+.about:hover  {
+    float:right;
+    margin-right:15px;
+    color:palegreen;
 }
+.bitchange:hover {
+    margin-left:15px;
+    color: palegreen;
 
-.Place_sell_order lable{
-    font-weight: 800;
 }
-
-  
+.log_out:hover{
+    margin-right:10px;
+    color:palegreen
+}
