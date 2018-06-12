@@ -8,7 +8,7 @@ import TradingViewWidget from 'react-tradingview-widget';
     
 import {Link} from 'react-router-dom' 
 
-//import {Row , Grid , Col , Button } from 'react-bootstrap'
+import {Button} from 'react-bootstrap';
 
 
 export default class Trading extends React.Component{
@@ -158,7 +158,7 @@ export default class Trading extends React.Component{
     render(){
         return(
             <div id="container">
-            <nav className = 'nav'>
+            <nav className = 'trade_nav'>
                             <Link to='/' className='bitchange'>BITCHANGE</Link> 
                             <Link to='/' className='log_out'>Log Out</Link>
                             <Link to='about' className='about'>About</Link>
@@ -167,12 +167,12 @@ export default class Trading extends React.Component{
                     <TradingViewWidget autosize symbol="BTCUSD" />
                 </div>
                 <div className="buy_orders">
-                    <table className='table'>
+                    <table className='table' id='buy_table'>
                         <thead>
                             <tr>
-                                <th style={{textAlign:'center'}}>Amount</th>
-                                <th style={{textAlign:'center'}}>Price</th>
-                                <th style={{textAlign:'center'}}>Total</th>
+                                <th>Amount</th>
+                                <th>Price</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -191,16 +191,16 @@ export default class Trading extends React.Component{
                     </table>
                 </div>
                 <div className="sell_orders">
-                   <table className='table'>
+                   <table className='table' id='sell_table'>
                           <thead>
                             <tr>
-                                <th style={{textAlign:'center'}}>Amount</th>
-                                <th style={{textAlign:'center'}}>Price</th>
-                                <th style={{textAlign:'center'}}>Total</th>
+                                <th>Amount</th>
+                                <th>Price</th>
+                                <th>Total</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {this.state.sell_orders_list.sort((a,b)=>a.sell_price>b.sell_price)
+                            {this.state.sell_orders_list.sort((a,b)=>a.sell_price<b.sell_price)
                             .map((item , i)=>{
                                 return [
                                     <tr key={i}>
@@ -216,53 +216,37 @@ export default class Trading extends React.Component{
                     </table>
                 </div>
                 <div className='Place_buy_order'>
-                    <form name='buyform' onSubmit = {this.handleSubmit_buy}>
-                    <span><strong>Buy X  ||  </strong>{`You have : ${this.state.y_amount}  Y`}</span>
-                        <ul className='flex-outer'>
-                            <li>
-                                <label for="amount_of_x">Amount of X:</label>
-                                <input type='number' name='amount' value = {this.state.amount} onChange={this.handleAmountChange} />
-                            </li>
-                        
-                            <li>
-                                <label for='price' className='buy_price'>Price:</label>
-                                <input type='text' name='price' value = {this.state.price} onChange={this.handlePriceChange} />
-                            </li>
-                            <li>
-                                <label for='total_price'>Total Price:</label>
-                                <input type='text' name='sum' value = {this.getTotal_buy(this.state.amount, this.state.price)} disabled  />
-                            </li>
-                            <li>
-                                <input type='submit' value='Buy' className='buy_button'/>
-                            </li>
-                        </ul>
+                    <form name='buyform' onSubmit = {this.handleSubmit_buy} className='buy_form'>
+                        <div className='orders_form_head'><strong>Buy USD ||  </strong>{`You have : ${this.state.y_amount}  Bitcoin`}</div><br/>
+                            
+                        <label for="amount_of_x">USD:</label>
+                        <input type='number' name='amount' className="form-control" value = {this.state.amount} onChange={this.handleAmountChange} /><br/>
+                    
+                        <label for='price' className='buy_price'>Price:</label>
+                        <input type='text' name='price' className="form-control" value = {this.state.price} onChange={this.handlePriceChange} /><br/>
+
+                        <label for='total_price'>Total Price:</label>
+                        <input type='text' name='sum' className="form-control" value = {this.getTotal_buy(this.state.amount, this.state.price)} disabled  /><br/>
+                        <Button bsStyle="success" type='submit' className='buy_button'>BUY USD</Button>
+                
                     </form>
-                
-                
                 </div>
                 <div className='Place_sell_order'>
-                    <form name='sellform' onSubmit={this.handleSubmit_sell}>
-                    <span> <strong>Sell X   ||  </strong>{`You have : ${this.state.x_amount}  of X`}</span>
-                        <ul className='flex-outer'>
-                        <li>
-                            <lable fore='Amount of X'>Amount of X:</lable>
-                            <input type='number' name='sell_amount' value = {this.state.sell_amount} onChange={this.handleAmountChange}/>
-                        </li>
-                        <li>
-                            <lable className = 'sell-price' style ={{marginRight:'42px'}}>Price:</lable>
-                            <input type='text' name='sell_price'  value = {this.state.sell_price} onChange={this.handlePriceChange}/>
-                        </li>
-                        <li>
-                            <lable className='lable'>Total Price:</lable>
-                            <input type='text' name='sell_sum'  value ={this.getTotal_sell(this.state.sell_amount , this.state.sell_price)} disabled/>
-                        </li>
-                        <li>
-                            <input type='submit' value='sell' className='sell-button' />
-                        </li>
-                        </ul>
+                    <form name='sellform' onSubmit={this.handleSubmit_sell} className='sell_form' >
+                    <div> <strong>Sell USD  ||  </strong>{`You have : ${this.state.x_amount} USD`}</div><br/>
+                    <lable fore='Amount of X'>BTC:</lable>
+                    <input type='number' name='sell_amount' className="form-control" value = {this.state.sell_amount} onChange={this.handleAmountChange}/><br/>
+                    
+                    <lable className = 'sell-price'>Price:</lable>
+                    <input type='text' name='sell_price'  className="form-control" value = {this.state.sell_price} onChange={this.handlePriceChange}/><br/>
+                    
+                    <lable className='lable'>Total Price:</lable>
+                    <input type='text' name='sell_sum' className="form-control" value ={this.getTotal_sell(this.state.sell_amount , this.state.sell_price)} disabled/><br/> 
+                    
+                    <Button bsStyle="danger" type='submit' className='sell_button'>SELL USD</Button>
                     </form>
                 </div>
-            </div> 
+            </div>  
             
         )
     }

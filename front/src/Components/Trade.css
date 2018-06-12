@@ -42,8 +42,12 @@
 }
 .nav{
     grid-area: nav;
+   
+}
+.trade_nav{
     background: rgba(40,57,101,.9);
-    padding-top: 22px;
+    grid-area: nav;
+    padding-top:25px;
 }
 .chart{
     grid-area:chart;
@@ -55,18 +59,22 @@
     grid-area: sell_orders
 }
 .Place_buy_order{
-    grid-area : place_buy_order
+    grid-area : place_buy_order;
+    background: rgba(40,57,101,.9);
+    color:lightgreen;
+    text-align: center;
 }
 .Place_sell_order{
-    grid-area: place_sell_order
+    grid-area: place_sell_order;
+    background: rgba(40,57,101 , .9);
+    color:lightcoral;
+    text-align: center;
 }
 .log_out{
     float:right;
-}
-.log_out{
     color:goldenrod;
-
 }
+
 .about  {
     float:right;
     margin-right:15px;
@@ -95,3 +103,47 @@
     margin-right:10px;
     color:palegreen
 }
+.table {
+    width: 100%;
+    background-color:#fff;
+    text-align: center;
+  }
+.table th {
+    text-align: center;
+    background-color:rgb(59, 179, 228);
+}
+#buy_table tbody tr:nth-child(even) {
+    background-color: lightgreen
+  }
+#buy_table tbody tr:nth-child(odd) {
+    background-color: lightblue
+  }
+#sell_table tbody tr:nth-child(even) {
+    background-color: lightcoral;
+  }
+#sell_table tbody tr:nth-child(odd) {
+    background-color: lightpink
+  } 
+
+.buy_form{
+    width:50%;
+    margin-left:25%;
+}   
+.buy_button{
+    width:100%
+} 
+.sell_form{
+    width:50%;
+    margin-left:25%;
+}   
+.sell_button{
+    width:100%
+} 
+label{
+    display:inline;
+}
+
+  
+
+
+  
