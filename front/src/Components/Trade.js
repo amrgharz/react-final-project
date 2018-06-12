@@ -119,7 +119,7 @@ export default class Trading extends React.Component{
     
 
     componentDidMount(){
-        const socket = io('http://localhost:5555')
+        const socket = io('http://localhost:3042')
         this.setState({ socket: socket }, () => {
             this.setState({ userId: this.props.location.state.Id }, () => {
                 this.state.socket.emit('start', this.state.userId)

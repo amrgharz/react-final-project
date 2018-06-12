@@ -27,7 +27,7 @@ class Login extends React.Component{
    this.handle_password_change = this.handle_password_change.bind(this)
   }
   componentDidMount(){
-    const socket = io('http://localhost:5555')
+    const socket = io('http://localhost:3042')
     this.setState({ socket: socket }, () => {
         this.state.socket.emit('startLogin')
     }); 

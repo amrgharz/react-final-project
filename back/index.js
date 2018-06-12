@@ -7,7 +7,7 @@ const handleRequest = (req , res )=>{
 }
 
 server.on('request' , handleRequest)
-server.listen(5555 , ()=> console.log('our badass server is ready'))
+server.listen(3042, ()=> console.log('our badass server is ready'))
 
 const io = require ('socket.io')(server);
 
