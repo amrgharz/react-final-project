@@ -10,7 +10,7 @@
     "start": "concurrently --kill-others-on-fail --names \"server client\" \"npm run server\" \"npm run client\"",
     "installfront": "cd front && npm install",
     "installback": "cd back && npm install",
-    "installall": "concurrently --kill-others-on-fail --names \"installfront installback\" \"npm run installfront\" \"npm run installback\""
+    "install": "concurrently --kill-others-on-fail --names \"installfront installback\" \"npm run installfront\" \"npm run installback\""
   },
   "repository": {
     "type": "git",
