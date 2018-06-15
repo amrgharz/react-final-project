@@ -10,6 +10,8 @@ import {withRouter} from 'react-router-dom'
 
 import {Navbar ,Nav ,NavItem } from 'react-bootstrap'
 
+import logo from '../logo.png'
+
 class Login extends React.Component{
 
     
@@ -56,26 +58,30 @@ handle_password_change= (event) =>{
         return(
         <div className='log_in_container'> 
         <Navbar inverse collapseOnSelect>
+            <img src={logo}/> 
                     <Navbar.Header>
                       <Navbar.Brand  >
-                        <a style={{color:"goldenrod"}} href="/">BITCHANGE</a>
+                        <a style={{color:"rgb(223, 218, 205)"}} href="/">BITCHANGE</a>
                       </Navbar.Brand>
                       <Navbar.Toggle />
                     </Navbar.Header>
                     <Navbar.Collapse>
                       <Nav pullRight>
                         <NavItem  eventKey={1}  href="/login">
-                          <h4 style={{color:"goldenrod" , lineHeight:"0px"}}>Log In</h4> 
+                          <h4 style={{color:"rgb(223, 218, 205)" , lineHeight:"0px"}}>Log In</h4> 
                         </NavItem>
                         <NavItem eventKey={2} href="/register">
-                            <h4 style={{color:"goldenrod" , lineHeight:"0px"}}>Register</h4>
+                            <h4 style={{color:"rgb(223, 218, 205)" , lineHeight:"0px"}}>Register</h4>
                         </NavItem>
-                        <NavItem eventKey={3} href="about">
-                            <h4 style={{color:"goldenrod" , lineHeight:"0px"}}>About</h4>
+                        <NavItem eventKey={3} href="/blog">
+                            <h4 style={{color:"rgb(223, 218, 205)" , lineHeight:"0px"}}>Blog</h4>
+                        </NavItem>
+                        <NavItem eventKey={4} href="about">
+                            <h4 style={{color:"rgb(223, 218, 205)" , lineHeight:"0px"}}>About</h4>
                         </NavItem>
                       </Nav>
                     </Navbar.Collapse>
-                  </Navbar>
+        </Navbar>
                   <div class="login-wrap">
                   <div class="login-html">
                       <input id="tab-1" type="radio" name="tab" class="sign-in" checked/><label for="tab-1" class="tab" >Sign In</label>

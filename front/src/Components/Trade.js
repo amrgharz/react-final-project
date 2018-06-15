@@ -10,6 +10,8 @@ import {Link} from 'react-router-dom'
 
 import {Button} from 'react-bootstrap';
 
+import logo from '../logo.png'
+
 
 export default class Trading extends React.Component{
     constructor(){
@@ -159,6 +161,7 @@ export default class Trading extends React.Component{
         return(
             <div id="container">
             <nav className = 'trade_nav'>
+                <img src={logo}/>
                             <Link to='/' className='bitchange'>BITCHANGE</Link> 
                             <Link to='/' className='log_out'>Log Out</Link>
                             <Link to='about' className='about'>About</Link>

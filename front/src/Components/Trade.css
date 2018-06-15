@@ -72,17 +72,17 @@
 }
 .log_out{
     float:right;
-    color:goldenrod;
+    color:rgb(223, 218, 205);
 }
 
 .about  {
     float:right;
     margin-right:15px;
-    color: goldenrod;
+    color: rgb(223, 218, 205);
 }
 .bitchange{
-    margin-left:15px;
-    color: goldenrod;
+    margin-left:90px;
+    color: rgb(223, 218, 205);
 
 }
 .log_out{
@@ -91,16 +91,13 @@
 
 .about:hover  {
     float:right;
-    margin-right:15px;
     color:palegreen;
 }
 .bitchange:hover {
-    margin-left:15px;
     color: palegreen;
 
 }
 .log_out:hover{
-    margin-right:10px;
     color:palegreen
 }
 .table {
@@ -116,13 +113,13 @@
     background-color: lightgreen
   }
 #buy_table tbody tr:nth-child(odd) {
-    background-color: lightblue
+    background-color: lightgreen
   }
 #sell_table tbody tr:nth-child(even) {
     background-color: lightcoral;
   }
 #sell_table tbody tr:nth-child(odd) {
-    background-color: lightpink
+    background-color: lightcoral;
   } 
 
 .buy_form{

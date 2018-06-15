@@ -4,6 +4,13 @@
     border-radius: 0;
     height:75px;
     padding-top: 12px; 
+    position: relative;
+  }
+  img {
+      position: absolute;
+      width: 76px;
+      top :0;
+      left:10px;
   }
   /*.nav{
     color : goldenrod;
@@ -88,7 +95,7 @@
   }
   .login-html .sign-in:checked + .tab,
   .login-html .sign-up:checked + .tab{
-      color:goldenrod;
+      color:rgb(223, 218, 205);
       border-color:#1161ee;
   }
   .login-form{
@@ -115,11 +122,10 @@
       background:rgba(255,255,255,.1);
   }
   .login-form .group input[data-type="password"]{
-      text-security:circle;
       -webkit-text-security:circle;
   }
   .login-form .group .label{
-      color:goldenrod;
+      color: rgb(223, 218, 205);
       font-size:12px;
   }
   .login-form .group .button{
@@ -138,7 +144,7 @@
       content:'';
       width:10px;
       height:2px;
-      background:goldenrod;
+      background:rgb(223, 218, 205);
       position:absolute;
       transition:all .2s ease-in-out 0s;
   }
@@ -154,7 +160,7 @@
       transform:scale(0) rotate(0);
   }
   .login-form .group .check:checked + label{
-      color:goldenrod;
+      color:rgb(223, 218, 205);
   }
   .login-form .group .check:checked + label .icon{
       background:#1161ee;

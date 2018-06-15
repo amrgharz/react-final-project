@@ -9,11 +9,13 @@ import Home from './Home';
 //import Register from './Register'
 import About from './About'
 import Trade from './Trade'
+import Blog from './Blog'
 
 
 const Routes = () => (
     <Router>
         <Switch>
+            <Route exact path='/blog' component={Blog}/>
             <Route exact path="/" component={Home} />
             {/*<Route exact path="/login" component={Login} />*/}
             {/*<Route exact path='/Register' component={Register}/>*/}
