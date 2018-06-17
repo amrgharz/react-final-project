@@ -10,7 +10,11 @@ import {withRouter} from 'react-router-dom'
 
 import {Navbar ,Nav ,NavItem } from 'react-bootstrap'
 
+//import { Col, Container, Row, Footer } from 'mdbreact';
+
 import logo from '../logo.png'
+
+import Footer from './Footer'
 
 class Login extends React.Component{
 
@@ -58,7 +62,7 @@ handle_password_change= (event) =>{
         return(
         <div className='log_in_container'> 
         <Navbar inverse collapseOnSelect>
-            <img src={logo}/> 
+            <img src={logo} alt='logo'/> 
                     <Navbar.Header>
                       <Navbar.Brand  >
                         <a style={{color:"rgb(223, 218, 205)"}} href="/">BITCHANGE</a>
@@ -70,8 +74,8 @@ handle_password_change= (event) =>{
                         <NavItem  eventKey={1}  href="/login">
                           <h4 style={{color:"rgb(223, 218, 205)" , lineHeight:"0px"}}>Log In</h4> 
                         </NavItem>
-                        <NavItem eventKey={2} href="/register">
-                            <h4 style={{color:"rgb(223, 218, 205)" , lineHeight:"0px"}}>Register</h4>
+                        <NavItem eventKey={2} href="/Explore">
+                            <h4 style={{color:"rgb(223, 218, 205)" , lineHeight:"0px"}}>Explore Markets</h4>
                         </NavItem>
                         <NavItem eventKey={3} href="/blog">
                             <h4 style={{color:"rgb(223, 218, 205)" , lineHeight:"0px"}}>Blog</h4>
@@ -137,6 +141,7 @@ handle_password_change= (event) =>{
           </div>
       
         </div>
+        <Footer/>
         </div>
         )
     }

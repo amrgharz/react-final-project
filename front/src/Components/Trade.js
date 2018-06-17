@@ -77,6 +77,7 @@ export default class Trading extends React.Component{
             alert("oops you do not have enough money")
             return
         }
+
         //const final_y_amount = this.state.y_amount - order.sum
         //var stateCopy = Object.assign({},this.state);
         //stateCopy.y_amount = final_y_amount;
@@ -107,6 +108,7 @@ export default class Trading extends React.Component{
             alert('you don\'t have enough X')
             return
         }
+        
         //const final_amount = this.state.x_amount - sell_order.sell_amount
         //const final_y_amount = this.state.user.y_amount + sell_order.sell_sum
         //var stateCopy = Object.assign({},this.state);
@@ -161,7 +163,7 @@ export default class Trading extends React.Component{
         return(
             <div id="container">
             <nav className = 'trade_nav'>
-                <img src={logo}/>
+                <img src={logo} alt='logo'/>
                             <Link to='/' className='bitchange'>BITCHANGE</Link> 
                             <Link to='/' className='log_out'>Log Out</Link>
                             <Link to='about' className='about'>About</Link>

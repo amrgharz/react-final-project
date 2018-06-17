@@ -19,11 +19,11 @@ const users = [
 ]
 
 const buy_orders_list = [ 
-    {userId:0 , amount: 10 , price:8 , sum:80},
-    {userId:0 , amount: 10 , price:9 , sum:90},
-    {userId:0 , amount: 10 , price:10 , sum:100},
-    {userId:1 , amount: 10 , price:11 , sum:110},
-    {userId:1 , amount: 10 , price:11 , sum:110}, 
+    {userId:0 , amount: 10 , price:10 , sum:80},
+    {userId:0 , amount: 10 , price:11 , sum:90},
+    {userId:0 , amount: 10 , price:12, sum:100},
+    {userId:1 , amount: 10 , price:13 , sum:110},
+    {userId:1 , amount: 10 , price:14 , sum:110}, 
 ]
 
 const sell_orders_list = [
